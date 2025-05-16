@@ -1,0 +1,69 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|d:\\prog\\faculdade\\arquitetura de computadores\\assembly-dashboard\\backend\\prototipo-conversor-assembly\\bancoregistradores.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|solutionrelative:prototipo-conversor-assembly\\bancoregistradores.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|d:\\prog\\faculdade\\arquitetura de computadores\\assembly-dashboard\\backend\\prototipo-conversor-assembly\\execucaomips.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|solutionrelative:prototipo-conversor-assembly\\execucaomips.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|d:\\prog\\faculdade\\arquitetura de computadores\\assembly-dashboard\\backend\\prototipo-conversor-assembly\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|solutionrelative:prototipo-conversor-assembly\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ExecucaoMips.cs",
+              "DocumentMoniker": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\ExecucaoMips.cs",
+              "RelativeDocumentMoniker": "prototipo-conversor-assembly\\ExecucaoMips.cs",
+              "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\ExecucaoMips.cs",
+              "RelativeToolTip": "prototipo-conversor-assembly\\ExecucaoMips.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAmwCkAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-16T18:09:28.729Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BancoRegistradores.cs",
+              "DocumentMoniker": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\BancoRegistradores.cs",
+              "RelativeDocumentMoniker": "prototipo-conversor-assembly\\BancoRegistradores.cs",
+              "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\BancoRegistradores.cs",
+              "RelativeToolTip": "prototipo-conversor-assembly\\BancoRegistradores.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-16T17:47:07.67Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Program.cs",
+              "RelativeDocumentMoniker": "prototipo-conversor-assembly\\Program.cs",
+              "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Program.cs",
+              "RelativeToolTip": "prototipo-conversor-assembly\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-16T17:46:40.482Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
