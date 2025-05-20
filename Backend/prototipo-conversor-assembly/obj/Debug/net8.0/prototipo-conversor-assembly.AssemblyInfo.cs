@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("prototipo-conversor-assembly")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7bebbae1e0acf1e78172e65ea437fb422f8e3346")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6daea25a1de0c2a33508575c1ca0607e606655b0")]
 [assembly: System.Reflection.AssemblyProductAttribute("prototipo-conversor-assembly")]
 [assembly: System.Reflection.AssemblyTitleAttribute("prototipo-conversor-assembly")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

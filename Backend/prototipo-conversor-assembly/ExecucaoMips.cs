@@ -11,18 +11,24 @@ internal class ExecucaoMips
 {
     //Lista com os comandos a serem executados
     public List<string> Comandos = new();
-    public BancoRegistradores BancoDeRegistradores;
+    public BancoRegistradores bancoDeRegistradores;
+    public List<string> memoriaPrograma = new();
+    public int pc { get; set; } = 0;
 
     public ExecucaoMips(List<string> comandos, ref BancoRegistradores bancoRegistradores) 
     { 
         Comandos = comandos;
-        BancoDeRegistradores = bancoRegistradores;
+        bancoDeRegistradores = bancoRegistradores;
     }
 
     public void Executar()
     {
         foreach (var com in Comandos)
         {
+            Console.WriteLine($"\n============================|PC={pc}|============================\n");
+
+            memoriaPrograma.Add(com);
+
             //Pega a instrução que foi escolhida
             string instrucao = com.Split(" ")[0];
             
@@ -34,20 +40,34 @@ internal class ExecucaoMips
             
             if(instrucao == "add")
             {
-                BancoDeRegistradores.Valores[regs[0]] = (regs[1][0] == '$' ? 0 : Convert.ToInt32(regs[1])) + (regs[2][0] == '$' ? 0 : Convert.ToInt32(regs[2]));
+                //Ele está adcionando o valor dos registradores se for um registrador, e adiciona apenas o valor numérico se for só um número
+                bancoDeRegistradores.Valores[regs[0]] = (regs[1][0] == '$' ? bancoDeRegistradores.Valores[regs[1]] : Convert.ToInt32(regs[1])) + (regs[2][0] == '$' ? bancoDeRegistradores.Valores[regs[2]] : Convert.ToInt32(regs[2]));
             }
 
-            Console.WriteLine($"O valor final de {regs[0]} é {BancoDeRegistradores.Valores[regs[0]]}");
+            Console.WriteLine($"O valor final de {regs[0]} é {bancoDeRegistradores.Valores[regs[0]]}");
 
             ExibirRegistradores();
+            ExibirMemoriaPrograma();
+            pc++;
         }   
     }
 
     public void ExibirRegistradores()
     {
-        foreach(var r in BancoDeRegistradores.Registradores)
+        Console.WriteLine("REGISTRADORES DE CPU");
+        foreach(var r in bancoDeRegistradores.Registradores)
         {
-            Console.WriteLine($"\t|{r} : {BancoDeRegistradores.Valores[r]} |");
+            Console.WriteLine($"\t|{r} : {bancoDeRegistradores.Valores[r]} |");
+        }
+    }
+
+    public void ExibirMemoriaPrograma()
+    {
+        Console.WriteLine("MEMÓRIA DE PROGRAMA");
+        foreach (var r in memoriaPrograma)
+        {
+            Console.WriteLine($"\t|{r}|");
         }
     }
 }
+
