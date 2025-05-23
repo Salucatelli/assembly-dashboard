@@ -7,8 +7,36 @@
       "RelativeMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|solutionrelative:prototipo-conversor-assembly\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|d:\\prog\\faculdade\\arquitetura de computadores\\assembly-dashboard\\backend\\prototipo-conversor-assembly\\execucaomips.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|solutionrelative:prototipo-conversor-assembly\\execucaomips.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|d:\\prog\\faculdade\\arquitetura de computadores\\assembly-dashboard\\backend\\prototipo-conversor-assembly\\mipsprogramparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|solutionrelative:prototipo-conversor-assembly\\mipsprogramparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|d:\\prog\\faculdade\\arquitetura de computadores\\assembly-dashboard\\backend\\prototipo-conversor-assembly\\instructions\\mipsinstruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|solutionrelative:prototipo-conversor-assembly\\instructions\\mipsinstruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|d:\\prog\\faculdade\\arquitetura de computadores\\assembly-dashboard\\backend\\prototipo-conversor-assembly\\bases\\memorymips.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|solutionrelative:prototipo-conversor-assembly\\bases\\memorymips.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|d:\\prog\\faculdade\\arquitetura de computadores\\assembly-dashboard\\backend\\prototipo-conversor-assembly\\bases\\cpuconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|solutionrelative:prototipo-conversor-assembly\\bases\\cpuconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|d:\\prog\\faculdade\\arquitetura de computadores\\assembly-dashboard\\backend\\prototipo-conversor-assembly\\mipscpu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|solutionrelative:prototipo-conversor-assembly\\mipscpu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|d:\\prog\\faculdade\\arquitetura de computadores\\assembly-dashboard\\backend\\prototipo-conversor-assembly\\instructions\\addiinstruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|solutionrelative:prototipo-conversor-assembly\\instructions\\addiinstruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|d:\\prog\\faculdade\\arquitetura de computadores\\assembly-dashboard\\backend\\prototipo-conversor-assembly\\instructions\\subinstruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|solutionrelative:prototipo-conversor-assembly\\instructions\\subinstruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|d:\\prog\\faculdade\\arquitetura de computadores\\assembly-dashboard\\backend\\prototipo-conversor-assembly\\instructions\\addinstruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|solutionrelative:prototipo-conversor-assembly\\instructions\\addinstruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C47AD517-A3C3-40B2-BC9B-F289C8AFAEDC}|prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj|d:\\prog\\faculdade\\arquitetura de computadores\\assembly-dashboard\\backend\\prototipo-conversor-assembly\\bancoregistradores.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -22,30 +50,121 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ExecucaoMips.cs",
-              "DocumentMoniker": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\ExecucaoMips.cs",
-              "RelativeDocumentMoniker": "prototipo-conversor-assembly\\ExecucaoMips.cs",
-              "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\ExecucaoMips.cs",
-              "RelativeToolTip": "prototipo-conversor-assembly\\ExecucaoMips.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAbAAAAAAAAAA==",
+              "Title": "MipsProgramParser.cs",
+              "DocumentMoniker": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\MipsProgramParser.cs",
+              "RelativeDocumentMoniker": "prototipo-conversor-assembly\\MipsProgramParser.cs",
+              "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\MipsProgramParser.cs",
+              "RelativeToolTip": "prototipo-conversor-assembly\\MipsProgramParser.cs",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAiwHMAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T12:10:49.934Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SubInstruction.cs",
+              "DocumentMoniker": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Instructions\\SubInstruction.cs",
+              "RelativeDocumentMoniker": "prototipo-conversor-assembly\\Instructions\\SubInstruction.cs",
+              "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Instructions\\SubInstruction.cs",
+              "RelativeToolTip": "prototipo-conversor-assembly\\Instructions\\SubInstruction.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwB4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T12:03:30.998Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AddInstruction.cs",
+              "DocumentMoniker": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Instructions\\AddInstruction.cs",
+              "RelativeDocumentMoniker": "prototipo-conversor-assembly\\Instructions\\AddInstruction.cs",
+              "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Instructions\\AddInstruction.cs",
+              "RelativeToolTip": "prototipo-conversor-assembly\\Instructions\\AddInstruction.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwBoAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T12:02:55.073Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AddiInstruction.cs",
+              "DocumentMoniker": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Instructions\\AddiInstruction.cs",
+              "RelativeDocumentMoniker": "prototipo-conversor-assembly\\Instructions\\AddiInstruction.cs",
+              "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Instructions\\AddiInstruction.cs",
+              "RelativeToolTip": "prototipo-conversor-assembly\\Instructions\\AddiInstruction.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAkwBUAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T11:58:21.614Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MipsInstruction.cs",
+              "DocumentMoniker": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Instructions\\MipsInstruction.cs",
+              "RelativeDocumentMoniker": "prototipo-conversor-assembly\\Instructions\\MipsInstruction.cs",
+              "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Instructions\\MipsInstruction.cs",
+              "RelativeToolTip": "prototipo-conversor-assembly\\Instructions\\MipsInstruction.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAgwBUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T11:48:09.644Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MemoryMips.cs",
+              "DocumentMoniker": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Bases\\MemoryMips.cs",
+              "RelativeDocumentMoniker": "prototipo-conversor-assembly\\Bases\\MemoryMips.cs",
+              "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Bases\\MemoryMips.cs",
+              "RelativeToolTip": "prototipo-conversor-assembly\\Bases\\MemoryMips.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T11:42:33.89Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CpuConfig.cs",
+              "DocumentMoniker": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Bases\\CpuConfig.cs",
+              "RelativeDocumentMoniker": "prototipo-conversor-assembly\\Bases\\CpuConfig.cs",
+              "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Bases\\CpuConfig.cs",
+              "RelativeToolTip": "prototipo-conversor-assembly\\Bases\\CpuConfig.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T11:41:54.542Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MipsCPU.cs",
+              "DocumentMoniker": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\MipsCPU.cs",
+              "RelativeDocumentMoniker": "prototipo-conversor-assembly\\MipsCPU.cs",
+              "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\MipsCPU.cs",
+              "RelativeToolTip": "prototipo-conversor-assembly\\MipsCPU.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-16T18:09:28.729Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 9,
               "Title": "BancoRegistradores.cs",
               "DocumentMoniker": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\BancoRegistradores.cs",
               "RelativeDocumentMoniker": "prototipo-conversor-assembly\\BancoRegistradores.cs",
               "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\BancoRegistradores.cs",
               "RelativeToolTip": "prototipo-conversor-assembly\\BancoRegistradores.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAGAAAAAAAAAA==",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAgwGMAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-16T17:47:07.67Z",
               "EditorCaption": ""
@@ -58,7 +177,7 @@
               "RelativeDocumentMoniker": "prototipo-conversor-assembly\\Program.cs",
               "ToolTip": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\Program.cs",
               "RelativeToolTip": "prototipo-conversor-assembly\\Program.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABcAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-16T17:46:40.482Z",
               "EditorCaption": ""

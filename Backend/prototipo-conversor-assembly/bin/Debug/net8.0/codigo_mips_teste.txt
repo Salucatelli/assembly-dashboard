@@ -1,0 +1,5 @@
+addi $s1, $zero, 10      # $s1 = 10
+addi $s2, $s1, 4        # $s2 = $s1 + 4 = 14
+sub $s2, $s2, $s1       # $s2 = $s2 - $s1 = 14 - 10 = 4
+addi $a0, $zero, 1
+lw $t0, 0($sp)          # Exemplo de load (SP padrão é 0, pode dar erro se não setar SP)
