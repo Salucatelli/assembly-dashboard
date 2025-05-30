@@ -164,6 +164,70 @@ namespace prototipo_conversor_assembly // Seu namespace atual
 
                         return new SubInstruction(originalLine, address, rdIndex, rsIndex, rtIndex);
                     }
+                case "lw":
+                    {
+                        // Regex específica para o formato de operandos de instruções de load/store: "$rt, offset($base)"
+                        // Ex: "$t0, 0($sp)" ou "$s1,20($s2)"
+                        Match memMatch = Regex.Match(operandsPart, @"^([$]\w+\d*)\s*,\s*(-?\d+)\s*\(\s*([$]\w+\d*)\s*\)$");
+                        if (!memMatch.Success)
+                        {
+                            throw new FormatException($"Formato inválido para instrução '{opcode}': {operandsPart}. Esperado '$rt, offset($base)'");
+                        }
+
+                        // Captura os grupos da regex
+                        string rtName = memMatch.Groups[1].Value;       // Ex: "$s1"
+                        short offset = Convert.ToInt16(memMatch.Groups[2].Value); // Ex: "20"
+                        string baseRegName = memMatch.Groups[3].Value;  // Ex: "$s2"
+
+                        // Converte os nomes dos registradores para seus índices numéricos
+                        int rtIndex = _registerFile.GetRegisterIndex(rtName);
+                        int baseRegIndex = _registerFile.GetRegisterIndex(baseRegName);
+
+                        // Retorna uma nova instância da instrução LoadWordInstruction
+                        return new LoadWordInstruction(originalLine, address, rtIndex, baseRegIndex, offset);
+                    }
+                case "sw":
+                    {
+                        // A mesma regex de lw serve para sw, pois o formato dos operandos é idêntico.
+                        Match memMatch = Regex.Match(operandsPart, @"^([$]\w+\d*)\s*,\s*(-?\d+)\s*\(\s*([$]\w+\d*)\s*\)$");
+                        if (!memMatch.Success)
+                        {
+                            throw new FormatException($"Formato inválido para instrução '{opcode}': {operandsPart}. Esperado '$rt, offset($base)'");
+                        }
+
+                        // Captura os grupos da regex
+                        string rtName = memMatch.Groups[1].Value;       // Ex: "$s1" (registrador fonte para sw)
+                        short offset = Convert.ToInt16(memMatch.Groups[2].Value); // Ex: "20"
+                        string baseRegName = memMatch.Groups[3].Value;  // Ex: "$s2"
+
+                        // Converte os nomes dos registradores para seus índices numéricos
+                        int rtIndex = _registerFile.GetRegisterIndex(rtName);
+                        int baseRegIndex = _registerFile.GetRegisterIndex(baseRegName);
+
+                        // Retorna uma nova instância da instrução StoreWordInstruction
+                        return new StoreWordInstruction(originalLine, address, rtIndex, baseRegIndex, offset);
+                    }
+                case "lh":
+                    {
+                        // A mesma regex de lw e sw serve para lh, pois o formato dos operandos é idêntico.
+                        Match memMatch = Regex.Match(operandsPart, @"^([$]\w+\d*)\s*,\s*(-?\d+)\s*\(\s*([$]\w+\d*)\s*\)$");
+                        if (!memMatch.Success)
+                        {
+                            throw new FormatException($"Formato inválido para instrução '{opcode}': {operandsPart}. Esperado '$rt, offset($base)'");
+                        }
+
+                        // Captura os grupos da regex
+                        string rtName = memMatch.Groups[1].Value;       // Ex: "$s1" (registrador destino para lh)
+                        short offset = Convert.ToInt16(memMatch.Groups[2].Value); // Ex: "20"
+                        string baseRegName = memMatch.Groups[3].Value;  // Ex: "$s2"
+
+                        // Converte os nomes dos registradores para seus índices numéricos
+                        int rtIndex = _registerFile.GetRegisterIndex(rtName);
+                        int baseRegIndex = _registerFile.GetRegisterIndex(baseRegName);
+
+                        // Retorna uma nova instância da instrução LoadHalfInstruction
+                        return new LoadHalfInstruction(originalLine, address, rtIndex, baseRegIndex, offset);
+                    }
                 // TODO: Adicionar cases para todas as outras instruções!
                 // lw, sw, lh, sh, lb, sb, and, or, nor, andi, ori, sll, srl, beq, bne, slt, sltu, slti, j, jr, jal
 
