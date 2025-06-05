@@ -17,7 +17,7 @@ namespace prototipo_conversor_assembly.Bases
         {
             if (sizeInBytes <= 0 || sizeInBytes % WordSize != 0)
             {
-                throw new ArgumentException("Memory size must be a positive multiple of 4 bytes.");
+                throw new ArgumentException("Valor de memória inválido.");
             }
             _data = new byte[sizeInBytes];
         }
@@ -26,7 +26,7 @@ namespace prototipo_conversor_assembly.Bases
         {
             if (address < 0 || address + WordSize > _data.Length || address % WordSize != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(address), $"Address 0x{address:X8} out of bounds or not word-aligned.");
+                throw new ArgumentOutOfRangeException(nameof(address), $"Endereço 0x{address:X8} errado.");
             }
             return BitConverter.ToInt32(_data, address);
         }
@@ -35,7 +35,7 @@ namespace prototipo_conversor_assembly.Bases
         {
             if (address < 0 || address + WordSize > _data.Length || address % WordSize != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(address), $"Address 0x{address:X8} out of bounds or not word-aligned.");
+                throw new ArgumentOutOfRangeException(nameof(address), $"Endereço 0x{address:X8} errado.");
             }
             Array.Copy(BitConverter.GetBytes(value), 0, _data, address, WordSize);
         }
@@ -44,7 +44,7 @@ namespace prototipo_conversor_assembly.Bases
         {
             if (address < 0 || address + 2 > _data.Length || address % 2 != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(address), $"Address 0x{address:X8} out of bounds or not half-word-aligned.");
+                throw new ArgumentOutOfRangeException(nameof(address), $"Endereço 0x{address:X8} errado.");
             }
             return BitConverter.ToInt16(_data, address);
         }
@@ -53,7 +53,7 @@ namespace prototipo_conversor_assembly.Bases
         {
             if (address < 0 || address + 2 > _data.Length || address % 2 != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(address), $"Address 0x{address:X8} out of bounds or not half-word-aligned.");
+                throw new ArgumentOutOfRangeException(nameof(address), $"Endereço 0x{address:X8} errado.");
             }
             Array.Copy(BitConverter.GetBytes(value), 0, _data, address, 2);
         }
@@ -62,7 +62,7 @@ namespace prototipo_conversor_assembly.Bases
         {
             if (address < 0 || address >= _data.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(address), $"Address 0x{address:X8} out of bounds.");
+                throw new ArgumentOutOfRangeException(nameof(address), $"Endereço 0x{address:X8} errado.");
             }
             return _data[address];
         }
@@ -71,7 +71,7 @@ namespace prototipo_conversor_assembly.Bases
         {
             if (address < 0 || address >= _data.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(address), $"Address 0x{address:X8} out of bounds.");
+                throw new ArgumentOutOfRangeException(nameof(address), $"Endereço 0x{address:X8} errado.");
             }
             _data[address] = value;
         }

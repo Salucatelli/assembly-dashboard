@@ -23,7 +23,7 @@ public class MipsCPU // Renomeado de ExecucaoMips
     public MipsCPU(BancoRegistradores bancoRegistradores)
     {
         bancoDeRegistradores = bancoRegistradores;
-        dataMemory = new MemoryMips(4096); // Ex: 4KB de memória de dados
+        dataMemory = new MemoryMips(8192); // Ex: 4KB de memória de dados
         config = new CpuConfig(); // Configurações padrão da CPU
         LoadedInstructions = new List<MipsInstruction>();
         TotalClockCycles = 0;
