@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "4Lq3epdA5xw=",
+  "success": true,
+  "projectFilePath": "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\prototipo-conversor-assembly.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\saluc\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x86\\8.0.8\\microsoft.netcore.app.runtime.win-x86.8.0.8.nupkg.sha512",
+    "C:\\Users\\saluc\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x86\\8.0.8\\microsoft.windowsdesktop.app.runtime.win-x86.8.0.8.nupkg.sha512",
+    "C:\\Users\\saluc\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x86\\8.0.8\\microsoft.aspnetcore.app.runtime.win-x86.8.0.8.nupkg.sha512"
+  ],
+  "logs": []
+}

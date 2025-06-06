@@ -9,7 +9,7 @@ BancoRegistradores bancoRegistradores = new BancoRegistradores();
 MipsCPU mips = new MipsCPU(bancoRegistradores); // Passamos o bancoRegistradores
 
 // Caminho para o arquivo assembly de teste
-string assemblyFilePath = "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\codigo_mips_teste.txt";
+string assemblyFilePath = "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\prototipo-conversor-assembly\\assembly.txt";
 
 // Cria um arquivo de teste se não existir
 if (!File.Exists(assemblyFilePath))

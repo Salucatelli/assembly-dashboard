@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Emit;
+using System.Reflection.Emit; // Não parece ser usado diretamente aqui, mas vou manter.
 using System.Text.RegularExpressions; // Para parsing mais robusto
 
 namespace prototipo_conversor_assembly // Seu namespace atual
@@ -15,7 +15,7 @@ namespace prototipo_conversor_assembly // Seu namespace atual
         public List<MipsInstruction> ParsedInstructions { get; private set; } // Lista de instruções parseadas
 
         private BancoRegistradores _registerFile; // Referência para obter índices de registradores
-        private Dictionary<string, int> _labels = new Dictionary<string, int>();
+        // private Dictionary<string, int> _labels = new Dictionary<string, int>(); // Esta linha é redundante, você já tem 'Labels' público. Vou remover.
 
         public MipsProgramParser(BancoRegistradores registerFile)
         {
@@ -65,7 +65,7 @@ namespace prototipo_conversor_assembly // Seu namespace atual
                     {
                         throw new InvalidOperationException($"Erro: Rótulo '{labelName}' duplicado na linha {i + 1}.");
                     }
-                    Labels.Add(labelName, currentAddress);
+                    Labels.Add(labelName, currentAddress); // Adiciona o rótulo com o endereço ATUAL
 
                     // Pega a parte da instrução após o rótulo
                     string instructionPartAfterLabel = trimmedLine.Substring(labelSeparatorIndex + 1).Trim();
@@ -122,30 +122,26 @@ namespace prototipo_conversor_assembly // Seu namespace atual
                 // 4. Se a linha ainda não estiver vazia, parse a instrução e adicione
                 if (!string.IsNullOrWhiteSpace(lineToParse))
                 {
-                    MipsInstruction instruction = ParseInstructionLine(lineToParse, originalLine, currentAddress);
+                    // ***** CORREÇÃO AQUI: Remove 'originalLine' do parâmetro *****
+                    MipsInstruction instruction = ParseInstructionLine(lineToParse, currentAddress);
                     ParsedInstructions.Add(instruction);
                     currentAddress += 4;
                 }
             }
         }
 
-        private MipsInstruction ParseInstructionLine(string line, string originalLine, int address)
+        // ***** CORREÇÃO AQUI: Altera a assinatura do método *****
+        private MipsInstruction ParseInstructionLine(string instructionText, int address)
         {
             // Regex para capturar opcode e operandos de forma mais robusta
-            // Permite espaços extras, vírgulas, parênteses para load/store
-            // Ex: "addi $s1, 1, 2"
-            // Ex: "lw $t0, 0($sp)"
-            // Ex: "add $t2, $t0, $t1"
-
-            // O padrão básico para instruções R, I, J (operandos separados por vírgula)
-            Match match = Regex.Match(line, @"^(\w+)\s*(.*)$");
+            Match match = Regex.Match(instructionText, @"^(\w+)\s*(.*)$"); // Usa instructionText
             if (!match.Success)
             {
-                throw new FormatException($"Erro de formato na instrução: '{line}'");
+                throw new FormatException($"Erro de formato na instrução: '{instructionText}'");
             }
 
-            string opcode = match.Groups[1].Value.ToLower(); // Ex: "addi"
-            string operandsPart = match.Groups[2].Value; // Ex: "$s1,1,2" ou "$s2,$s1,4"
+            string opcode = match.Groups[1].Value.ToLower();
+            string operandsPart = match.Groups[2].Value;
 
             string[] operands = operandsPart.Split(',').Select(op => op.Trim()).ToArray();
 
@@ -155,32 +151,27 @@ namespace prototipo_conversor_assembly // Seu namespace atual
                     {
                         string rtName = operands[0];
                         string rsName = operands[1];
-                        int immediate = Convert.ToInt32(operands[2]); // short para 16 bits com sinal
+                        int immediate;
 
-                        string[] parts = operandsPart.Split(',').Select(p => p.Trim()).ToArray();
-                        string immediateString = parts[2];
+                        string immediateString = operands[2];
 
-                        // **** MUDAR AQUI ****
                         if (immediateString.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
                         {
-                            // Remove o "0x" e converte como hexadecimal (base 16)
                             immediate = Convert.ToInt32(immediateString.Substring(2), 16);
                         }
                         else
                         {
-                            // Tenta converter como decimal. Pode ser positivo ou negativo.
-                            // int.TryParse é mais robusto para números decimais.
                             if (!int.TryParse(immediateString, out immediate))
                             {
-                                throw new FormatException($"Formato de imediato inválido para addi: '{immediateString}'. Esperado um número decimal ou hexadecimal (0x...). Linha: '{operandsPart}'");
+                                throw new FormatException($"Formato de imediato inválido para addi: '{immediateString}'. Esperado um número decimal ou hexadecimal (0x...). Linha: '{instructionText}'"); // Usa instructionText
                             }
                         }
-                        // **** FIM DA MUDANÇA ****
 
                         int rtIndex = _registerFile.GetRegisterIndex(rtName);
                         int rsIndex = _registerFile.GetRegisterIndex(rsName);
 
-                        return new AddiInstruction(originalLine, address, rtIndex, rsIndex, immediate);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new AddiInstruction(instructionText, address, rtIndex, rsIndex, immediate);
                     }
                 case "add": // rd, rs, rt
                     {
@@ -192,7 +183,8 @@ namespace prototipo_conversor_assembly // Seu namespace atual
                         int rsIndex = _registerFile.GetRegisterIndex(rsName);
                         int rtIndex = _registerFile.GetRegisterIndex(rtName);
 
-                        return new AddInstruction(originalLine, address, rdIndex, rsIndex, rtIndex);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new AddInstruction(instructionText, address, rdIndex, rsIndex, rtIndex);
                     }
                 case "sub": // rd, rs, rt
                     {
@@ -204,193 +196,164 @@ namespace prototipo_conversor_assembly // Seu namespace atual
                         int rsIndex = _registerFile.GetRegisterIndex(rsName);
                         int rtIndex = _registerFile.GetRegisterIndex(rtName);
 
-                        return new SubInstruction(originalLine, address, rdIndex, rsIndex, rtIndex);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new SubInstruction(instructionText, address, rdIndex, rsIndex, rtIndex);
                     }
                 case "lw":
                     {
-                        // Regex específica para o formato de operandos de instruções de load/store: "$rt, offset($base)"
-                        // Ex: "$t0, 0($sp)" ou "$s1,20($s2)"
                         Match memMatch = Regex.Match(operandsPart, @"^([$]\w+\d*)\s*,\s*(-?\d+)\s*\(\s*([$]\w+\d*)\s*\)$");
                         if (!memMatch.Success)
                         {
                             throw new FormatException($"Formato inválido na instrução '{opcode}': {operandsPart}. Esperado '$rt, offset($base)'");
                         }
 
-                        // Captura os grupos da regex
-                        string rtName = memMatch.Groups[1].Value;       // Ex: "$s1"
-                        short offset = Convert.ToInt16(memMatch.Groups[2].Value); // Ex: "20"
-                        string baseRegName = memMatch.Groups[3].Value;  // Ex: "$s2"
-
-                        // Converte os nomes dos registradores para seus índices numéricos
-                        int rtIndex = _registerFile.GetRegisterIndex(rtName);
-                        int baseRegIndex = _registerFile.GetRegisterIndex(baseRegName);
-
-                        // Retorna uma nova instância da instrução LoadWordInstruction
-                        return new LoadWordInstruction(originalLine, address, rtIndex, baseRegIndex, offset);
-                    }
-                case "sw":
-                    {
-                        // A mesma regex de lw serve para sw, pois o formato dos operandos é idêntico.
-                        Match memMatch = Regex.Match(operandsPart, @"^([$]\w+\d*)\s*,\s*(-?\d+)\s*\(\s*([$]\w+\d*)\s*\)$");
-                        if (!memMatch.Success)
-                        {
-                            throw new FormatException($"Formato inválido na instrução '{opcode}': {operandsPart}. Esperado '$rt, offset($base)'");
-                        }
-
-                        // Captura os grupos da regex
-                        string rtName = memMatch.Groups[1].Value;       // Ex: "$s1" (registrador fonte para sw)
-                        short offset = Convert.ToInt16(memMatch.Groups[2].Value); // Ex: "20"
-                        string baseRegName = memMatch.Groups[3].Value;  // Ex: "$s2"
-
-                        // Converte os nomes dos registradores para seus índices numéricos
-                        int rtIndex = _registerFile.GetRegisterIndex(rtName);
-                        int baseRegIndex = _registerFile.GetRegisterIndex(baseRegName);
-
-                        // Retorna uma nova instância da instrução StoreWordInstruction
-                        return new StoreWordInstruction(originalLine, address, rtIndex, baseRegIndex, offset);
-                    }
-                case "lh":
-                    {
-                        // A mesma regex de lw e sw serve para lh, pois o formato dos operandos é idêntico.
-                        Match memMatch = Regex.Match(operandsPart, @"^([$]\w+\d*)\s*,\s*(-?\d+)\s*\(\s*([$]\w+\d*)\s*\)$");
-                        if (!memMatch.Success)
-                        {
-                            throw new FormatException($"Formato inválido na instrução '{opcode}': {operandsPart}. Esperado '$rt, offset($base)'");
-                        }
-
-                        // Captura os grupos da regex
-                        string rtName = memMatch.Groups[1].Value;       // Ex: "$s1" (registrador destino para lh)
-                        short offset = Convert.ToInt16(memMatch.Groups[2].Value); // Ex: "20"
-                        string baseRegName = memMatch.Groups[3].Value;  // Ex: "$s2"
-
-                        // Converte os nomes dos registradores para seus índices numéricos
-                        int rtIndex = _registerFile.GetRegisterIndex(rtName);
-                        int baseRegIndex = _registerFile.GetRegisterIndex(baseRegName);
-
-                        // Retorna uma nova instância da instrução LoadHalfInstruction
-                        return new LoadHalfInstruction(originalLine, address, rtIndex, baseRegIndex, offset);
-                    }
-                case "sh": // rt, offset(base)
-                    {
-                        // A mesma regex de lw, sw, lh serve para sh, pois o formato dos operandos é idêntico.
-                        Match memMatch = Regex.Match(operandsPart, @"^([$]\w+\d*)\s*,\s*(-?\d+)\s*\(\s*([$]\w+\d*)\s*\)$");
-                        if (!memMatch.Success)
-                        {
-                            throw new FormatException($"Formato inválido para instrução '{opcode}': {operandsPart}. Esperado '$rt, offset($base)'");
-                        }
-
-                        // Captura os grupos da regex
-                        string rtName = memMatch.Groups[1].Value;       // Registrador fonte para sh
+                        string rtName = memMatch.Groups[1].Value;
                         short offset = Convert.ToInt16(memMatch.Groups[2].Value);
                         string baseRegName = memMatch.Groups[3].Value;
 
-                        // Converte os nomes dos registradores para seus índices numéricos
                         int rtIndex = _registerFile.GetRegisterIndex(rtName);
                         int baseRegIndex = _registerFile.GetRegisterIndex(baseRegName);
 
-                        // Retorna uma nova instância da instrução StoreHalfInstruction
-                        return new StoreHalfInstruction(originalLine, address, rtIndex, baseRegIndex, offset);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new LoadWordInstruction(instructionText, address, rtIndex, baseRegIndex, offset);
+                    }
+                case "sw":
+                    {
+                        Match memMatch = Regex.Match(operandsPart, @"^([$]\w+\d*)\s*,\s*(-?\d+)\s*\(\s*([$]\w+\d*)\s*\)$");
+                        if (!memMatch.Success)
+                        {
+                            throw new FormatException($"Formato inválido na instrução '{opcode}': {operandsPart}. Esperado '$rt, offset($base)'");
+                        }
+
+                        string rtName = memMatch.Groups[1].Value;
+                        short offset = Convert.ToInt16(memMatch.Groups[2].Value);
+                        string baseRegName = memMatch.Groups[3].Value;
+
+                        int rtIndex = _registerFile.GetRegisterIndex(rtName);
+                        int baseRegIndex = _registerFile.GetRegisterIndex(baseRegName);
+
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new StoreWordInstruction(instructionText, address, rtIndex, baseRegIndex, offset);
+                    }
+                case "lh":
+                    {
+                        Match memMatch = Regex.Match(operandsPart, @"^([$]\w+\d*)\s*,\s*(-?\d+)\s*\(\s*([$]\w+\d*)\s*\)$");
+                        if (!memMatch.Success)
+                        {
+                            throw new FormatException($"Formato inválido na instrução '{opcode}': {operandsPart}. Esperado '$rt, offset($base)'");
+                        }
+
+                        string rtName = memMatch.Groups[1].Value;
+                        short offset = Convert.ToInt16(memMatch.Groups[2].Value);
+                        string baseRegName = memMatch.Groups[3].Value;
+
+                        int rtIndex = _registerFile.GetRegisterIndex(rtName);
+                        int baseRegIndex = _registerFile.GetRegisterIndex(baseRegName);
+
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new LoadHalfInstruction(instructionText, address, rtIndex, baseRegIndex, offset);
+                    }
+                case "sh": // rt, offset(base)
+                    {
+                        Match memMatch = Regex.Match(operandsPart, @"^([$]\w+\d*)\s*,\s*(-?\d+)\s*\(\s*([$]\w+\d*)\s*\)$");
+                        if (!memMatch.Success)
+                        {
+                            throw new FormatException($"Formato inválido para instrução '{opcode}': {operandsPart}. Esperado '$rt, offset($base)'");
+                        }
+
+                        string rtName = memMatch.Groups[1].Value;
+                        short offset = Convert.ToInt16(memMatch.Groups[2].Value);
+                        string baseRegName = memMatch.Groups[3].Value;
+
+                        int rtIndex = _registerFile.GetRegisterIndex(rtName);
+                        int baseRegIndex = _registerFile.GetRegisterIndex(baseRegName);
+
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new StoreHalfInstruction(instructionText, address, rtIndex, baseRegIndex, offset);
                     }
                 case "lb": // rt, offset(base)
                     {
-                        // A mesma regex de load/store é reutilizada.
                         Match memMatch = Regex.Match(operandsPart, @"^([$]\w+\d*)\s*,\s*(-?\d+)\s*\(\s*([$]\w+\d*)\s*\)$");
                         if (!memMatch.Success)
                         {
                             throw new FormatException($"Formato inválido para instrução '{opcode}': {operandsPart}. Esperado '$rt, offset($base)'");
                         }
 
-                        // Captura os grupos da regex
                         string rtName = memMatch.Groups[1].Value;
-                        // O offset é lido como int, conforme a nova diretriz
                         int offset = Convert.ToInt32(memMatch.Groups[2].Value);
                         string baseRegName = memMatch.Groups[3].Value;
 
-                        // Converte os nomes dos registradores para seus índices numéricos
                         int rtIndex = _registerFile.GetRegisterIndex(rtName);
                         int baseRegIndex = _registerFile.GetRegisterIndex(baseRegName);
 
-                        // Retorna uma nova instância da instrução LoadByteInstruction
-                        return new LoadByteInstruction(originalLine, address, rtIndex, baseRegIndex, offset);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new LoadByteInstruction(instructionText, address, rtIndex, baseRegIndex, offset);
                     }
                 case "sb": // rt, offset(base)
                     {
-                        // A mesma regex de load/store é reutilizada.
                         Match memMatch = Regex.Match(operandsPart, @"^([$]\w+\d*)\s*,\s*(-?\d+)\s*\(\s*([$]\w+\d*)\s*\)$");
                         if (!memMatch.Success)
                         {
                             throw new FormatException($"Formato inválido para instrução '{opcode}': {operandsPart}. Esperado '$rt, offset($base)'");
                         }
 
-                        // Captura os grupos da regex
                         string rtName = memMatch.Groups[1].Value;
-                        // O offset é lido como int
                         int offset = Convert.ToInt32(memMatch.Groups[2].Value);
                         string baseRegName = memMatch.Groups[3].Value;
 
-                        // Converte os nomes dos registradores para seus índices numéricos
                         int rtIndex = _registerFile.GetRegisterIndex(rtName);
                         int baseRegIndex = _registerFile.GetRegisterIndex(baseRegName);
 
-                        // Retorna uma nova instância da instrução StoreByteInstruction
-                        return new StoreByteInstruction(originalLine, address, rtIndex, baseRegIndex, offset);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new StoreByteInstruction(instructionText, address, rtIndex, baseRegIndex, offset);
                     }
                 case "and": // rd, rs, rt
                     {
-                        // Divide a string de operandos pela vírgula e remove espaços em branco
                         string[] parts = operandsPart.Split(',').Select(p => p.Trim()).ToArray();
 
-                        // Verifica se o número de operandos está correto
                         if (parts.Length != 3)
                         {
                             throw new FormatException($"Formato inválido para instrução '{opcode}': '{operandsPart}'. Esperado '$rd, $rs, $rt'");
                         }
 
-                        // Converte os nomes dos registradores para seus índices numéricos
                         int rdIndex = _registerFile.GetRegisterIndex(parts[0]);
                         int rsIndex = _registerFile.GetRegisterIndex(parts[1]);
                         int rtIndex = _registerFile.GetRegisterIndex(parts[2]);
 
-                        // Retorna uma nova instância da instrução AndInstruction
-                        return new AndInstruction(originalLine, address, rdIndex, rsIndex, rtIndex);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new AndInstruction(instructionText, address, rdIndex, rsIndex, rtIndex);
                     }
                 case "or": // rd, rs, rt
                     {
-                        // Divide a string de operandos pela vírgula e remove espaços em branco
                         string[] parts = operandsPart.Split(',').Select(p => p.Trim()).ToArray();
 
-                        // Verifica se o número de operandos está correto
                         if (parts.Length != 3)
                         {
                             throw new FormatException($"Formato inválido para instrução '{opcode}': '{operandsPart}'. Esperado '$rd, $rs, $rt'");
                         }
 
-                        // Converte os nomes dos registradores para seus índices numéricos
                         int rdIndex = _registerFile.GetRegisterIndex(parts[0]);
                         int rsIndex = _registerFile.GetRegisterIndex(parts[1]);
                         int rtIndex = _registerFile.GetRegisterIndex(parts[2]);
 
-                        // Retorna uma nova instância da instrução OrInstruction
-                        return new OrInstruction(originalLine, address, rdIndex, rsIndex, rtIndex);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new OrInstruction(instructionText, address, rdIndex, rsIndex, rtIndex);
                     }
                 case "nor": // rd, rs, rt
                     {
-                        // Divide a string de operandos pela vírgula e remove espaços em branco
                         string[] parts = operandsPart.Split(',').Select(p => p.Trim()).ToArray();
 
-                        // Verifica se o número de operandos está correto
                         if (parts.Length != 3)
                         {
                             throw new FormatException($"Formato inválido para instrução '{opcode}': '{operandsPart}'. Esperado '$rd, $rs, $rt'");
                         }
 
-                        // Converte os nomes dos registradores para seus índices numéricos
                         int rdIndex = _registerFile.GetRegisterIndex(parts[0]);
                         int rsIndex = _registerFile.GetRegisterIndex(parts[1]);
                         int rtIndex = _registerFile.GetRegisterIndex(parts[2]);
 
-                        // Retorna uma nova instância da instrução NorInstruction
-                        return new NorInstruction(originalLine, address, rdIndex, rsIndex, rtIndex);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new NorInstruction(instructionText, address, rdIndex, rsIndex, rtIndex);
                     }
                 case "andi": // rt, rs, immediate
                     {
@@ -407,42 +370,24 @@ namespace prototipo_conversor_assembly // Seu namespace atual
 
                         int immediate;
 
-                        // Lógica para parsear imediato decimal ou hexadecimal
                         if (immediateString.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
                         {
-                            // Se o imediato for hexadecimal, remove o "0x" e converte para base 16
-                            // Aqui o imediato pode ser considerado sem sinal, então usar Convert.ToUInt32 e depois cast para int
-                            // para que o valor seja tratado como positivo.
                             immediate = (int)Convert.ToUInt32(immediateString.Substring(2), 16);
                         }
                         else
                         {
-                            // Tenta converter como decimal.
-                            // Para ANDI, é importante que o valor não seja negativo aqui,
-                            // ou que você o trate como unsigned.
-                            // Para manter a consistência, podemos ler como int e a instrução fará o zero-extend.
                             if (!int.TryParse(immediateString, out immediate))
                             {
-                                throw new FormatException($"Formato de imediato inválido para andi: '{immediateString}'. Esperado um número decimal ou hexadecimal (0x...). Linha: '{originalLine}'");
+                                throw new FormatException($"Formato de imediato inválido para andi: '{immediateString}'. Esperado um número decimal ou hexadecimal (0x...). Linha: '{instructionText}'"); // Usa instructionText
                             }
-                            // O MIPS trata o imediato de ANDI como unsigned de 16 bits.
-                            // Se o usuário digitar um número negativo, ele será truncado e zero-estendido.
-                            // Por exemplo, -1 será 0xFFFF (65535).
-                            // Se precisar que -1 fique como -1, use ADDI.
-                            // Para ANDI, o imediato é sempre um número entre 0 e 65535.
-                            // Podemos forçar isso aqui:
-                            if (immediate < 0 || immediate > 65535)
-                            {
-                                // É um número fora do range de 16 bits sem sinal.
-                                // Podemos lançar um erro ou truncar. Truncar é o comportamento MIPS.
-                                immediate = (int)((uint)immediate & 0xFFFF); // Trunca para 16 bits, tratando como unsigned
-                            }
+                            immediate = (int)((uint)immediate & 0xFFFF);
                         }
 
                         int rtIndex = _registerFile.GetRegisterIndex(rtName);
                         int rsIndex = _registerFile.GetRegisterIndex(rsName);
 
-                        return new AndiInstruction(originalLine, address, rtIndex, rsIndex, immediate);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new AndiInstruction(instructionText, address, rtIndex, rsIndex, immediate);
                     }
                 case "ori": // rt, rs, immediate
                     {
@@ -459,30 +404,24 @@ namespace prototipo_conversor_assembly // Seu namespace atual
 
                         int immediate;
 
-                        // Lógica para parsear imediato decimal ou hexadecimal
                         if (immediateString.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
                         {
-                            // Se o imediato for hexadecimal, remove o "0x" e converte para base 16
-                            // Usamos UInt32 e cast para int para tratar como valor sem sinal.
                             immediate = (int)Convert.ToUInt32(immediateString.Substring(2), 16);
                         }
                         else
                         {
-                            // Tenta converter como decimal.
                             if (!int.TryParse(immediateString, out immediate))
                             {
-                                throw new FormatException($"Formato de imediato inválido para ori: '{immediateString}'. Esperado um número decimal ou hexadecimal (0x...). Linha: '{originalLine}'");
+                                throw new FormatException($"Formato de imediato inválido para ori: '{immediateString}'. Esperado um número decimal ou hexadecimal (0x...). Linha: '{instructionText}'"); // Usa instructionText
                             }
-                            // O MIPS trata o imediato de ORI como unsigned de 16 bits.
-                            // Se o usuário digitar um número negativo, ele será truncado e zero-estendido.
-                            // Para garantir que o valor esteja no range de 0 a 65535:
-                            immediate = (int)((uint)immediate & 0xFFFF); // Trunca para 16 bits, tratando como unsigned
+                            immediate = (int)((uint)immediate & 0xFFFF);
                         }
 
                         int rtIndex = _registerFile.GetRegisterIndex(rtName);
                         int rsIndex = _registerFile.GetRegisterIndex(rsName);
 
-                        return new OriInstruction(originalLine, address, rtIndex, rsIndex, immediate);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new OriInstruction(instructionText, address, rtIndex, rsIndex, immediate);
                     }
                 case "sll": // rd, rt, shamt
                     {
@@ -500,19 +439,19 @@ namespace prototipo_conversor_assembly // Seu namespace atual
                         int shamt;
                         if (!int.TryParse(shamtString, out shamt))
                         {
-                            throw new FormatException($"Valor de shamt inválido para sll: '{shamtString}'. Esperado um número decimal entre 0 e 31. Linha: '{originalLine}'");
+                            throw new FormatException($"Valor de shamt inválido para sll: '{shamtString}'. Esperado um número decimal entre 0 e 31. Linha: '{instructionText}'"); // Usa instructionText
                         }
 
-                        // O shamt é um valor de 5 bits (0-31)
                         if (shamt < 0 || shamt > 31)
                         {
-                            throw new ArgumentOutOfRangeException(nameof(shamt), $"Valor de shamt fora do intervalo permitido (0-31): {shamt}. Linha: '{originalLine}'");
+                            throw new ArgumentOutOfRangeException(nameof(shamt), $"Valor de shamt fora do intervalo permitido (0-31): {shamt}. Linha: '{instructionText}'"); // Usa instructionText
                         }
 
                         int rdIndex = _registerFile.GetRegisterIndex(rdName);
                         int rtIndex = _registerFile.GetRegisterIndex(rtName);
 
-                        return new SllInstruction(originalLine, address, rdIndex, rtIndex, shamt);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new SllInstruction(instructionText, address, rdIndex, rtIndex, shamt);
                     }
                 case "srl": // rd, rt, shamt
                     {
@@ -530,19 +469,19 @@ namespace prototipo_conversor_assembly // Seu namespace atual
                         int shamt;
                         if (!int.TryParse(shamtString, out shamt))
                         {
-                            throw new FormatException($"Valor de shamt inválido para srl: '{shamtString}'. Esperado um número decimal entre 0 e 31. Linha: '{originalLine}'");
+                            throw new FormatException($"Valor de shamt inválido para srl: '{shamtString}'. Esperado um número decimal entre 0 e 31. Linha: '{instructionText}'"); // Usa instructionText
                         }
 
-                        // O shamt é um valor de 5 bits (0-31)
                         if (shamt < 0 || shamt > 31)
                         {
-                            throw new ArgumentOutOfRangeException(nameof(shamt), $"Valor de shamt fora do intervalo permitido (0-31): {shamt}. Linha: '{originalLine}'");
+                            throw new ArgumentOutOfRangeException(nameof(shamt), $"Valor de shamt fora do intervalo permitido (0-31): {shamt}. Linha: '{instructionText}'"); // Usa instructionText
                         }
 
                         int rdIndex = _registerFile.GetRegisterIndex(rdName);
                         int rtIndex = _registerFile.GetRegisterIndex(rtName);
 
-                        return new SrlInstruction(originalLine, address, rdIndex, rtIndex, shamt);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new SrlInstruction(instructionText, address, rdIndex, rtIndex, shamt);
                     }
                 case "beq": // rs, rt, label
                     {
@@ -561,29 +500,206 @@ namespace prototipo_conversor_assembly // Seu namespace atual
                         int rtIndex = _registerFile.GetRegisterIndex(rtName);
 
                         // Resolver o rótulo para obter o endereço de destino
-                        if (!_labels.TryGetValue(labelName, out int targetAddress))
+                        // ***** CORREÇÃO AQUI: Usa 'Labels' em vez de '_labels' *****
+                        if (!Labels.TryGetValue(labelName, out int targetAddress))
                         {
-                            throw new FormatException($"Rótulo '{labelName}' não encontrado ou indefinido. Linha: '{originalLine}'");
+                            throw new FormatException($"Rótulo '{labelName}' não encontrado ou indefinido. Linha: '{instructionText}'"); // Usa instructionText
                         }
 
                         // Calcular o offset
-                        // O offset é relativo ao PC da instrução *seguinte* (address + 4)
-                        // e é em número de PALAVRAS (dividir por 4).
                         int offset = (targetAddress - (address + 4)) / 4;
 
                         // Verificar se o offset cabe em 16 bits (-32768 a 32767)
                         if (offset < short.MinValue || offset > short.MaxValue)
                         {
-                            throw new ArgumentOutOfRangeException(nameof(offset), $"Offset para o rótulo '{labelName}' ({offset}) está fora do intervalo de 16 bits para beq. Linha: '{originalLine}'");
+                            throw new ArgumentOutOfRangeException(nameof(offset), $"Offset para o rótulo '{labelName}' ({offset}) está fora do intervalo de 16 bits para beq. Linha: '{instructionText}'"); // Usa instructionText
                         }
 
-                        return new BeqInstruction(originalLine, address, rsIndex, rtIndex, offset);
+                        // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                        return new BeqInstruction(instructionText, address, rsIndex, rtIndex, offset);
+                    }
+                case "bne": // rs, rt, label
+                    {
+                        string[] parts = operandsPart.Split(',').Select(p => p.Trim()).ToArray();
+
+                        if (parts.Length != 3)
+                        {
+                            throw new FormatException($"Formato inválido para instrução '{opcode}': '{operandsPart}'. Esperado '$rs, $rt, label'");
+                        }
+
+                        string rsName = parts[0];
+                        string rtName = parts[1];
+                        string labelName = parts[2];
+
+                        int rsIndex = _registerFile.GetRegisterIndex(rsName);
+                        int rtIndex = _registerFile.GetRegisterIndex(rtName);
+
+                        // Resolver o rótulo para obter o endereço de destino
+                        if (!Labels.TryGetValue(labelName, out int targetAddress))
+                        {
+                            throw new FormatException($"Rótulo '{labelName}' não encontrado ou indefinido. Linha: '{instructionText}'");
+                        }
+
+                        // Calcular o offset da mesma forma que para beq
+                        int offset = (targetAddress - (address + 4)) / 4;
+
+                        // Verificar se o offset cabe em 16 bits
+                        if (offset < short.MinValue || offset > short.MaxValue)
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(offset), $"Offset para o rótulo '{labelName}' ({offset}) está fora do intervalo de 16 bits para bne. Linha: '{instructionText}'");
+                        }
+
+                        return new BneInstruction(instructionText, address, rsIndex, rtIndex, offset);
+                    }
+                case "slt": // rd, rs, rt (Set on Less Than)
+                    {
+                        string[] parts = operandsPart.Split(',').Select(p => p.Trim()).ToArray();
+
+                        if (parts.Length != 3)
+                        {
+                            throw new FormatException($"Formato inválido para instrução '{opcode}': '{operandsPart}'. Esperado '$rd, $rs, $rt'");
+                        }
+
+                        string rdName = parts[0];
+                        string rsName = parts[1];
+                        string rtName = parts[2];
+
+                        int rdIndex = _registerFile.GetRegisterIndex(rdName);
+                        int rsIndex = _registerFile.GetRegisterIndex(rsName);
+                        int rtIndex = _registerFile.GetRegisterIndex(rtName);
+
+                        // Usa 'instructionText' no construtor
+                        return new SltInstruction(instructionText, address, rdIndex, rsIndex, rtIndex);
+                    }
+                case "sltu": // rd, rs, rt (Set on Less Than Unsigned)
+                    {
+                        string[] parts = operandsPart.Split(',').Select(p => p.Trim()).ToArray();
+
+                        if (parts.Length != 3)
+                        {
+                            throw new FormatException($"Formato inválido para instrução '{opcode}': '{operandsPart}'. Esperado '$rd, $rs, $rt'");
+                        }
+
+                        string rdName = parts[0];
+                        string rsName = parts[1];
+                        string rtName = parts[2];
+
+                        int rdIndex = _registerFile.GetRegisterIndex(rdName);
+                        int rsIndex = _registerFile.GetRegisterIndex(rsName);
+                        int rtIndex = _registerFile.GetRegisterIndex(rtName);
+
+                        // Usa 'instructionText' no construtor
+                        return new SltuInstruction(instructionText, address, rdIndex, rsIndex, rtIndex);
+                    }
+                case "slti": // rt, rs, immediate (Set on Less Than Immediate)
+                    {
+                        string[] parts = operandsPart.Split(',').Select(p => p.Trim()).ToArray();
+
+                        if (parts.Length != 3)
+                        {
+                            throw new FormatException($"Formato inválido para instrução '{opcode}': '{operandsPart}'. Esperado '$rt, $rs, immediate'");
+                        }
+
+                        string rtName = parts[0];
+                        string rsName = parts[1];
+                        string immediateString = parts[2];
+
+                        short immediate;
+
+                        // Parse do valor imediato (pode ser decimal ou hexadecimal)
+                        if (immediateString.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+                        {
+                            // Convert.ToInt16 aceita strings hexadecimais para valores de 16 bits.
+                            // Mas é mais seguro usar Convert.ToInt32 e então fazer o cast para short,
+                            // garantindo que o valor caiba (mesmo que Int16 já fizesse isso).
+                            int tempImmediate = Convert.ToInt32(immediateString.Substring(2), 16);
+                            if (tempImmediate < short.MinValue || tempImmediate > short.MaxValue)
+                            {
+                                throw new FormatException($"Valor imediato '{immediateString}' fora do intervalo de 16 bits com sinal para SLTI. Linha: '{instructionText}'");
+                            }
+                            immediate = (short)tempImmediate;
+                        }
+                        else
+                        {
+                            if (!short.TryParse(immediateString, out immediate))
+                            {
+                                throw new FormatException($"Formato de imediato inválido para slti: '{immediateString}'. Esperado um número decimal ou hexadecimal (0x...). Linha: '{instructionText}'");
+                            }
+                        }
+
+                        int rtIndex = _registerFile.GetRegisterIndex(rtName);
+                        int rsIndex = _registerFile.GetRegisterIndex(rsName);
+
+                        // Usa 'instructionText' no construtor
+                        return new SltiInstruction(instructionText, address, rtIndex, rsIndex, immediate);
+                    }
+                case "j": // target (label) (Jump)
+                    {
+                        string labelName = operandsPart.Trim(); // O target é simplesmente o nome da label
+
+                        if (string.IsNullOrWhiteSpace(labelName))
+                        {
+                            throw new FormatException($"Formato inválido para instrução '{opcode}': '{operandsPart}'. Esperado 'label'");
+                        }
+
+                        // Resolver o rótulo para obter o endereço de destino absoluto
+                        if (!Labels.TryGetValue(labelName, out int targetAddress))
+                        {
+                            throw new FormatException($"Rótulo '{labelName}' não encontrado ou indefinido. Linha: '{instructionText}'");
+                        }
+
+                        // O endereço de destino do jump precisa ser alinhado à palavra (múltiplo de 4)
+                        if (targetAddress % 4 != 0)
+                        {
+                            throw new FormatException($"Endereço de destino para jump '{labelName}' ({targetAddress:X}) não está alinhado à palavra. Linha: '{instructionText}'");
+                        }
+
+                        // Usa 'instructionText' no construtor
+                        return new JumpInstruction(instructionText, address, targetAddress);
+                    }
+                case "jr": // rs (Jump Register)
+                    {
+                        string rsName = operandsPart.Trim(); // O único operando é o registrador
+
+                        if (string.IsNullOrWhiteSpace(rsName))
+                        {
+                            throw new FormatException($"Formato inválido para instrução '{opcode}': '{operandsPart}'. Esperado '$rs'");
+                        }
+
+                        int rsIndex = _registerFile.GetRegisterIndex(rsName);
+
+                        // Usa 'instructionText' no construtor
+                        return new JumpRegisterInstruction(instructionText, address, rsIndex);
+                    }
+                case "jal": // target (label) (Jump And Link)
+                    {
+                        string labelName = operandsPart.Trim(); // O target é o nome da label
+
+                        if (string.IsNullOrWhiteSpace(labelName))
+                        {
+                            throw new FormatException($"Formato inválido para instrução '{opcode}': '{operandsPart}'. Esperado 'label'");
+                        }
+
+                        // Resolver o rótulo para obter o endereço de destino absoluto
+                        if (!Labels.TryGetValue(labelName, out int targetAddress))
+                        {
+                            throw new FormatException($"Rótulo '{labelName}' não encontrado ou indefinido. Linha: '{instructionText}'");
+                        }
+
+                        // O endereço de destino do jump precisa ser alinhado à palavra (múltiplo de 4)
+                        if (targetAddress % 4 != 0)
+                        {
+                            throw new FormatException($"Endereço de destino para jal '{labelName}' ({targetAddress:X}) não está alinhado à palavra. Linha: '{instructionText}'");
+                        }
+
+                        // Usa 'instructionText' no construtor
+                        return new JumpAndLinkInstruction(instructionText, address, targetAddress);
                     }
                 // TODO: Adicionar cases para todas as outras instruções!
-                // bne, slt, sltu, slti, j, jr, jal
 
                 default:
-                    return new UnknownInstruction(originalLine, address, opcode); // Instrução não reconhecida
+                    // ***** CORREÇÃO AQUI: Usa 'instructionText' no construtor *****
+                    return new UnknownInstruction(instructionText, address, opcode); // Instrução não reconhecida
             }
         }
 

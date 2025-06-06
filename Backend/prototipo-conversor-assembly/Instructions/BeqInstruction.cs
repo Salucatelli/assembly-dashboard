@@ -1,8 +1,7 @@
-﻿// Instructions/BeqInstruction.cs
-using prototipo_conversor_assembly.Bases;
+﻿using prototipo_conversor_assembly.Bases;
 using System;
 
-namespace prototipo_conversor_assembly // Seu namespace atual
+namespace prototipo_conversor_assembly 
 {
     public class BeqInstruction : MipsInstruction
     {
