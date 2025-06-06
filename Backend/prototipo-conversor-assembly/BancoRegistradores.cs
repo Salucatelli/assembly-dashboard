@@ -20,7 +20,7 @@ public class BancoRegistradores
 
     //Dicionário com os valores armazenados em cada registrador
     public Dictionary<string, int> Valores = new();
-    private Dictionary<string, int> _registerNameToIndex = new(); // Novo: para mapear nome para índice numérico
+    private Dictionary<string, int> _registerNameToIndex = new(); 
 
     public BancoRegistradores()
     {
@@ -71,7 +71,6 @@ public class BancoRegistradores
         };
     }
 
-    // Novo método: Obtém o índice numérico de um registrador pelo nome
     public int GetRegisterIndex(string regName)
     {
         if (_registerNameToIndex.TryGetValue(regName, out int index))

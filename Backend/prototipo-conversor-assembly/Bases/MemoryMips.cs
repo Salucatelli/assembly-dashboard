@@ -9,7 +9,7 @@ namespace prototipo_conversor_assembly.Bases
     public class MemoryMips
     {
         private byte[] _data;
-        private const int WordSize = 4; // 4 bytes por palavra MIPS
+        private const int WordSize = 4; // 4 bytes por palavra
 
         public int SizeInBytes => _data.Length;
 

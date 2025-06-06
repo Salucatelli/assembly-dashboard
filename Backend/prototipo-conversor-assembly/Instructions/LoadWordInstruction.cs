@@ -1,6 +1,4 @@
-﻿// Em Instructions/LoadWordInstruction.cs
-
-using prototipo_conversor_assembly.Bases;
+﻿using prototipo_conversor_assembly.Bases;
 using System;
 
 namespace prototipo_conversor_assembly
@@ -20,7 +18,7 @@ namespace prototipo_conversor_assembly
             _offset = offset;
         }
 
-        public override int Execute(MipsCPU cpu, MemoryMips dataMemory) // Assegure-se de que é MemoryMips
+        public override int Execute(MipsCPU cpu, MemoryMips dataMemory) 
         {
             int baseAddress = cpu.bancoDeRegistradores.GetValue(_baseRegIndex);
             int effectiveAddress = baseAddress + _offset;
@@ -31,8 +29,6 @@ namespace prototipo_conversor_assembly
 
         public override string ToBinaryString()
         {
-            // Formato I-Type: opcode (6) | rs (5) | rt (5) | immediate (16)
-            // Opcode para LW é 100011 (35 em decimal)
             string opcode = "100011";
             string rsBinary = Convert.ToString(_baseRegIndex, 2).PadLeft(5, '0');
             string rtBinary = Convert.ToString(_rtIndex, 2).PadLeft(5, '0');
@@ -49,7 +45,7 @@ namespace prototipo_conversor_assembly
 
         public override int GetClockCycles(CpuConfig config)
         {
-            return config.ITypeCycles; // Usa o valor configurado para instruções tipo I
+            return config.ITypeCycles; 
         }
     }
 }

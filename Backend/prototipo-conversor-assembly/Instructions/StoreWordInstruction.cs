@@ -1,14 +1,13 @@
-﻿// Instructions/StoreWordInstruction.cs
-using prototipo_conversor_assembly.Bases;
+﻿using prototipo_conversor_assembly.Bases;
 using System;
 
 namespace prototipo_conversor_assembly
 {
     public class StoreWordInstruction : MipsInstruction
     {
-        private int _rtIndex;     // Registrador fonte (ex: $s1)
-        private int _baseRegIndex; // Registrador base (ex: $s2)
-        private short _offset;    // Offset (ex: 20)
+        private int _rtIndex;    
+        private int _baseRegIndex; 
+        private short _offset;    
 
         public StoreWordInstruction(string assemblyLine, int address, int rtIndex, int baseRegIndex, short offset)
             : base(assemblyLine, address)
@@ -21,24 +20,18 @@ namespace prototipo_conversor_assembly
 
         public override int Execute(MipsCPU cpu, MemoryMips dataMemory)
         {
-            // 1. Calcular o endereço efetivo na memória
-            int baseAddress = cpu.bancoDeRegistradores.GetValue(_baseRegIndex); // Obtém o valor de $s2
-            int effectiveAddress = baseAddress + _offset; // Calcula $s2 + 20
+            int baseAddress = cpu.bancoDeRegistradores.GetValue(_baseRegIndex); 
+            int effectiveAddress = baseAddress + _offset; 
 
-            // 2. Obter o valor do registrador fonte
-            int valueToStore = cpu.bancoDeRegistradores.GetValue(_rtIndex); // Obtém o valor de $s1
+            int valueToStore = cpu.bancoDeRegistradores.GetValue(_rtIndex); 
 
-            // 3. Armazenar a palavra na memória de dados
-            dataMemory.WriteWord(effectiveAddress, valueToStore); // Escreve na Memória[$s2 + 20]
+            dataMemory.WriteWord(effectiveAddress, valueToStore); 
 
-            // Retorna o próximo PC sequencial
             return cpu.pc + 4;
         }
 
         public override string ToBinaryString()
         {
-            // Formato I-Type: opcode (6) | rs (5) | rt (5) | immediate (16)
-            // Opcode para LW é 100011 (35 em decimal)
             string opcode = "100011";
             string rsBinary = Convert.ToString(_baseRegIndex, 2).PadLeft(5, '0');
             string rtBinary = Convert.ToString(_rtIndex, 2).PadLeft(5, '0');
@@ -55,7 +48,7 @@ namespace prototipo_conversor_assembly
 
         public override int GetClockCycles(CpuConfig config)
         {
-            return config.ITypeCycles; // Usa o valor configurado para instruções tipo I
+            return config.ITypeCycles; 
         }
     }
 }

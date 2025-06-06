@@ -50,12 +50,20 @@ O projeto está organizado da seguinte maneira:
 Para usar este simulador:
 
 1.  **Clone o Repositório:**
-    ```bash
-    git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
-    cd seu-repositorio
-    ```
+    O primeiro passo é clonar o repositóro do projeto para ter acesso a ele.
 3.  **Código em Assembly:**
-    Escreva um codigo em assembly do MIPS, e coloque-o em um arquivo chamado "assembly.txt", antes de executar o programa.
+    Dentro da pasta "projeto",encontre um arquivo chamado "assembly.txt" e adicione o código assembly nele antes de executar o programa. Lembre-se de configurar o clock da CPU e o ciclo de cada instrução no começo do arquivo
+
+    ```assembly
+    #-----Configurações da CPU para o simulador-----
+
+    #CONFIG:RTypeCycles=1
+    #CONFIG:ITypeCycles=1
+    #CONFIG:JTypeCycles=2
+    #CONFIG:CpuClockMhz=100.0
+
+    #Aqui começa o código assembly do MIPS
+    ```
 
 4.  **Executar:**
-    Entre em uma pasta chamada "projeteo" e procure o arquivo "prototipo-conversor-assembly.exe". Execute-o para começaro programa.
+    Procure o arquivo "prototipo-conversor-assembly.exe". Execute-o para começar o programa.

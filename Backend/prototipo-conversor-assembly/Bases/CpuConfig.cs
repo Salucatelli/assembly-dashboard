@@ -12,12 +12,12 @@ namespace prototipo_conversor_assembly
         public int RTypeCycles { get; set; }        // Ciclos para instruções Tipo R
         public int ITypeCycles { get; set; }        // Ciclos para instruções Tipo I
         public int JTypeCycles { get; set; }        // Ciclos para instruções Tipo J
-        public int BranchCycles { get; set; } // Adicione esta linha (geralmente mais de 1 ciclo)
+        public int BranchCycles { get; set; } 
 
         public CpuConfig()
         {
             // Valores padrão
-            ClockFrequencyMHz = 200; // 200 MHz
+            ClockFrequencyMHz = 200; 
             RTypeCycles = 1;
             ITypeCycles = 1;
             JTypeCycles = 1;
