@@ -657,6 +657,49 @@ namespace prototipo_conversor_assembly // Seu namespace atual
 
                         return new JumpAndLinkInstruction(instructionText, address, targetAddress);
                     }
+                case "mul": 
+                    {
+                        string[] parts = operandsPart.Split(',').Select(p => p.Trim()).ToArray();
+
+                        if (parts.Length != 3)
+                        {
+                            throw new FormatException($"Formato inválido para instrução '{opcode}': '{operandsPart}'. Esperado '$rd, $rs, $rt'");
+                        }
+
+                        int rdIndex = _registerFile.GetRegisterIndex(parts[0]);
+                        int rsIndex = _registerFile.GetRegisterIndex(parts[1]);
+                        int rtIndex = _registerFile.GetRegisterIndex(parts[2]);
+
+                        return new MulInstruction(instructionText, address, rdIndex, rsIndex, rtIndex);
+                    }
+                case "li": 
+                    {
+                        string[] parts = operandsPart.Split(',').Select(p => p.Trim()).ToArray();
+                        if (parts.Length != 2)
+                        {
+                            throw new FormatException($"Formato inválido para instrução '{opcode}': '{operandsPart}'. Esperado '$rd, immediate'");
+                        }
+
+                        string rdName = parts[0];
+                        string immediateString = parts[1];
+
+                        int immediate;
+                        if (immediateString.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+                        {
+                            immediate = Convert.ToInt32(immediateString.Substring(2), 16);
+                        }
+                        else
+                        {
+                            if (!int.TryParse(immediateString, out immediate))
+                            {
+                                throw new FormatException($"Formato de imediato inválido para li: '{immediateString}'. Esperado um número decimal ou hexadecimal (0x...). Linha: '{instructionText}'");
+                            }
+                        }
+
+                        int rdIndex = _registerFile.GetRegisterIndex(rdName);
+
+                        return new LiInstruction(instructionText, address, rdIndex, immediate);
+                    }
 
                 default:
                     return new UnknownInstruction(instructionText, address, opcode); 

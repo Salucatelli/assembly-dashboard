@@ -1,27 +1,45 @@
 # Configurações da CPU para o simulador
-#CONFIG:RTypeCycles=1
+#CONFIG:RTypeCycles=2
 #CONFIG:ITypeCycles=1
-#CONFIG:JTypeCycles=2
-#CONFIG:CpuClockMhz=100.0
+#CONFIG:JTypeCycles=3
+#CONFIG:CpuClockMhz=20
 
-# Código MIPS para testar a instrução LW (Load Word)
 
-# --- Setup Inicial ---
-addi $sp, $zero, 4096     # $sp = 4096 (0x1000)
+main:
+    # Inicialização de registradores
+    li $t0, 12
+    li $t1, 5
 
-# --- Armazenando um valor na memória para ser carregado ---
-addi $s0, $zero, 12345    # $s0 = 12345
-sw $s0, 0($sp)            # Memória[4096] = 12345
+    # Aritmética
+    add $t2, $t0, $t1
+    sub $t3, $t0, $t1
+    mul $t4, $t0, $t1
 
-# --- Teste da instrução LW ---
-addi $t0, $zero, 0        # $t0 = 0
-lw $t0, 0($sp)            # $t0 = Memória[4096] (Esperado: $t0 = 12345)
+    # Operações lógicas
+    and $t5, $t0, $t1  # $t5 = 12 & 5
+    or  $t6, $t0, $t1  # $t6 = 12 | 5
 
-# --- Teste de LW com offset ---
-addi $s1, $zero, 54321    # $s1 = 54321
-sw $s1, 4($sp)            # Memória[4100] = 54321
+    # Simulando memória com a stack
+    addi $sp, $sp, -12   
+    sw $t2, 0($sp)
+    sw $t4, 4($sp)
+    sb $t5, 8($sp)
 
-addi $t1, $zero, 0        # $t1 = 0
-lw $t1, 4($sp)            # $t1 = Memória[4100] (Esperado: $t1 = 54321)
+    # Carrega valores de volta
+    lw $s0, 0($sp)
+    lw $s1, 4($sp)
+    lb $s2, 8($sp)
 
-# Fim do programa
+    # Desvio condicional
+    beq $t0, $t1, equal_case
+    j  not_equal_case
+
+equal_case:
+    li $s3, 111
+    j end
+
+not_equal_case:
+    li $s3, 222
+
+end:
+    nop

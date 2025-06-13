@@ -33,10 +33,10 @@ namespace prototipo_conversor_assembly.Bases
 
         public void WriteWord(int address, int value)
         {
-            if (address < 0 || address + WordSize > _data.Length || address % WordSize != 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(address), $"Endereço 0x{address:X8} errado.");
-            }
+            //if (address < 0 || address + WordSize > _data.Length || address % WordSize != 0)
+            //{
+            //    throw new ArgumentOutOfRangeException(nameof(address), $"Endereço 0x{address:X8} errado.");
+            //}
             Array.Copy(BitConverter.GetBytes(value), 0, _data, address, WordSize);
         }
 

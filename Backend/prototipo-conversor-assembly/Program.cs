@@ -7,6 +7,8 @@ MipsCPU mips = new MipsCPU(bancoRegistradores);
 // Caminho para o arquivo assembly de teste
 string assemblyFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assembly.txt");
 
+//string assemblyFilePath = "D:\\Prog\\Faculdade\\Arquitetura de Computadores\\assembly-dashboard\\Backend\\assembly.txt";
+
 // verifica se existe o arquivo
 if (!File.Exists(assemblyFilePath))
 {
